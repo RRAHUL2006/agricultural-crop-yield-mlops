@@ -10,3 +10,4 @@ __pycache__/
 *.pyc
 ~$*.docx
 .dvc/cache/
+.dvc/gdrive/
