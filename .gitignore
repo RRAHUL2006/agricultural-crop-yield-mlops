@@ -2,12 +2,10 @@ mlruns/
 
 data/raw/
 data/processed/final_dataset.csv
-
-models/best_model.pkl
-models/preprocessor.pkl
-
 __pycache__/
 *.pyc
 ~$*.docx
 .dvc/cache/
 .dvc/gdrive/
+models/best_model.pkl
+models/preprocessor.pkl
