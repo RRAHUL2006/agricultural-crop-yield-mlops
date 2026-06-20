@@ -12,10 +12,14 @@ app = FastAPI(
 )
 
 
-# Load trained artifacts
-model = joblib.load("models/best_model.pkl")
-preprocessor = joblib.load("models/preprocessor.pkl")
+import os
 
+model = None
+preprocessor = None
+
+if os.path.exists("models/best_model.pkl") and os.path.exists("models/preprocessor.pkl"):
+    model = joblib.load("models/best_model.pkl")
+    preprocessor = joblib.load("models/preprocessor.pkl")
 
 # Input schema
 class CropInput(BaseModel):
@@ -46,7 +50,8 @@ def home():
 # Prediction route
 @app.post("/predict")
 def predict(data: CropInput):
-
+    if model is None or preprocessor is None:
+        return {"error": "Model files not available"}
     input_data = pd.DataFrame(
         [data.model_dump()]
     )
