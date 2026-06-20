@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD sh -c "dvc pull --no-scm && uvicorn app:app --host 0.0.0.0 --port 8000"
+CMD sh -c "dvc pull && uvicorn app:app --host 0.0.0.0 --port 8000"
