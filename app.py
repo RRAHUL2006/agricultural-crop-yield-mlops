@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
 import joblib
+import os
 
 
 # Create FastAPI application
@@ -11,16 +12,47 @@ app = FastAPI(
     version="1.0"
 )
 
-
-import os
-
 model = None
 preprocessor = None
 
-if os.path.exists("models/best_model.pkl") and os.path.exists("models/preprocessor.pkl"):
+
+def load_models():
+    global model, preprocessor
+
+    print("Configuring DVC authentication...")
+
+    os.system(
+        "dvc remote modify --local myremote "
+        "gdrive_use_service_account true"
+    )
+
+    service_account_path = (
+        "/etc/secrets/service-account.json"
+        if os.path.exists("/etc/secrets/service-account.json")
+        else "service-account.json"
+    )
+
+    os.system(
+        f"dvc remote modify --local myremote "
+        f"gdrive_service_account_json_file_path {service_account_path}"
+    )
+
+    print("Downloading models from DVC...")
+
+    if os.system("dvc pull models/best_model.pkl.dvc") != 0:
+        raise Exception("Failed to download best_model.pkl")
+
+    if os.system("dvc pull models/preprocessor.pkl.dvc") != 0:
+        raise Exception("Failed to download preprocessor.pkl")
+
+    print("Loading models...")
+
     model = joblib.load("models/best_model.pkl")
     preprocessor = joblib.load("models/preprocessor.pkl")
 
+    print("Models loaded successfully")
+    
+load_models()
 # Input schema
 class CropInput(BaseModel):
     crop: str

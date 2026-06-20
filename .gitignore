@@ -9,3 +9,4 @@ __pycache__/
 .dvc/gdrive/
 models/best_model.pkl
 models/preprocessor.pkl
+service-account.json
