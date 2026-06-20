@@ -4,6 +4,8 @@ set -e
 
 echo "Starting model download..."
 
+export DVC_NO_SCM=true
+
 dvc remote modify --local myremote gdrive_use_service_account true
 dvc remote modify --local myremote gdrive_service_account_json_file_path /etc/secrets/service-account.json
 
