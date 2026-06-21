@@ -13,18 +13,46 @@ app = FastAPI(
 )
 
 
+import gdown
+
 model = None
 preprocessor = None
 
-if os.path.exists("models/best_model.pkl") and os.path.exists("models/preprocessor.pkl"):
-    print("Loading models from local files...")
+os.makedirs("models", exist_ok=True)
 
-    model = joblib.load("models/best_model.pkl")
-    preprocessor = joblib.load("models/preprocessor.pkl")
+MODEL_PATH = "models/best_model.pkl"
+PREPROCESSOR_PATH = "models/preprocessor.pkl"
 
-    print("Models loaded successfully")
-else:
-    print("Model files not found")
+MODEL_ID = "1iCACPhCp6FyCYxygDFq9dPCU3AUvYQ6C"
+PREPROCESSOR_ID = "1tK3xmynzHHxBkfYYgFvnN-Q-H_XRuywD"
+
+
+def download_models():
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading best_model.pkl...")
+        gdown.download(
+            f"https://drive.google.com/uc?id={MODEL_ID}",
+            MODEL_PATH,
+            quiet=False
+        )
+
+    if not os.path.exists(PREPROCESSOR_PATH):
+        print("Downloading preprocessor.pkl...")
+        gdown.download(
+            f"https://drive.google.com/uc?id={PREPROCESSOR_ID}",
+            PREPROCESSOR_PATH,
+            quiet=False
+        )
+
+
+download_models()
+
+print("Loading models...")
+
+model = joblib.load(MODEL_PATH)
+preprocessor = joblib.load(PREPROCESSOR_PATH)
+
+print("Models loaded successfully")
 
 
 
