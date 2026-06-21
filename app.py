@@ -12,19 +12,21 @@ app = FastAPI(
     version="1.0"
 )
 
-
-import gdown
-
 model = None
 preprocessor = None
 
-os.makedirs("models", exist_ok=True)
+if os.path.exists("models/best_model.pkl") and os.path.exists("models/preprocessor.pkl"):
+    print("Loading models...")
 
-MODEL_PATH = "models/best_model.pkl"
-PREPROCESSOR_PATH = "models/preprocessor.pkl"
+    model = joblib.load("models/best_model.pkl")
+    preprocessor = joblib.load("models/preprocessor.pkl")
 
-MODEL_ID = "1iCACPhCp6FyCYxygDFq9dPCU3AUvYQ6C"
-PREPROCESSOR_ID = "1tK3xmynzHHxBkfYYgFvnN-Q-H_XRuywD"
+    print("Models loaded successfully")
+else:
+    print("Model files not found")
+
+
+
 
 
 def download_models():

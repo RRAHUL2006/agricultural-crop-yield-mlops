@@ -7,7 +7,5 @@ __pycache__/
 ~$*.docx
 .dvc/cache/
 .dvc/gdrive/
-models/best_model.pkl
-models/preprocessor.pkl
 service-account.json
 gcp-key.json
