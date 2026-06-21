@@ -29,32 +29,7 @@ else:
 
 
 
-def download_models():
-    if not os.path.exists(MODEL_PATH):
-        print("Downloading best_model.pkl...")
-        gdown.download(
-            f"https://drive.google.com/uc?id={MODEL_ID}",
-            MODEL_PATH,
-            quiet=False
-        )
 
-    if not os.path.exists(PREPROCESSOR_PATH):
-        print("Downloading preprocessor.pkl...")
-        gdown.download(
-            f"https://drive.google.com/uc?id={PREPROCESSOR_ID}",
-            PREPROCESSOR_PATH,
-            quiet=False
-        )
-
-
-download_models()
-
-print("Loading models...")
-
-model = joblib.load(MODEL_PATH)
-preprocessor = joblib.load(PREPROCESSOR_PATH)
-
-print("Models loaded successfully")
 
 
 
