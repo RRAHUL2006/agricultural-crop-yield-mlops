@@ -10,3 +10,4 @@ __pycache__/
 models/best_model.pkl
 models/preprocessor.pkl
 service-account.json
+gcp-key.json
